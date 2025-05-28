@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import numpy as np
-from photoeditor import *
+from mini_photo_editor import *
 
 
 st.title("🖼️Photo Editor")
