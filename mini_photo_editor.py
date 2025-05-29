@@ -16,17 +16,20 @@ def to_rgb(cv_img):
 
 
 def adjust_brightness(img, brightness=0):
-    alpha = 1.0  # no changes to the current image
-    beta = 0.0 # no second image
-    gamma = brightness # how much constant value we wanna add
-    bright_image =  cv2.addWeighted(img, alpha, img, beta, gamma)
+    # alpha = 1.0  # no changes to the current image
+    # beta = 0.0 # no second image
+    # gamma = brightness # how much constant value we wanna add
+    # bright_image =  cv2.addWeighted(img, alpha, img, beta, gamma)
+    bright_image = cv2.convertScaleAbs(img, alpha=1.0, beta=brightness)
+
     return bright_image
 
 def adjust_contrast(img, contrast=0):
-    alpha = contrast  # no changes to the current image
-    beta = 0.0 # no second image
-    gamma = 0 # no Scalar value needed
-    contrast_image =  cv2.addWeighted(img, alpha, img, beta, gamma)
+    # alpha = contrast  # no changes to the current image
+    # beta = 0.0 # no second image
+    # gamma = 0 # no Scalar value needed
+    # contrast_image =  cv2.addWeighted(img, alpha, img, beta, gamma)
+    contrast_image =  cv2.convertScaleAbs(img, alpha=contrast, beta=0)
     return contrast_image
 
 def convert_grayscale(img):
