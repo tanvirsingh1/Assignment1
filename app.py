@@ -41,19 +41,19 @@ with st.sidebar:
 
     filename = st.text_input("Enter filename (without extension)", value="my_image")
     file_format = st.selectbox("Choose format", ["PNG", "JPEG"])
+    if 'stack' in st.session_state and st.session_state.stack:
+        latest_image = st.session_state.stack[-1]
+        pil_image = Image.fromarray(to_rgb(latest_image))
+        buf = BytesIO()
+        pil_image.save(buf, format=file_format)
+        buf.seek(0)
 
-    latest_image = st.session_state.stack[-1]
-    pil_image = Image.fromarray(to_rgb(latest_image))
-    buf = BytesIO()
-    pil_image.save(buf, format=file_format)
-    buf.seek(0)
-
-    st.download_button(
-        label="Download Image",
-        data=buf,
-        file_name=f"{filename}.{file_format.lower()}",
-        mime=f"image/{file_format.lower()}"
-    )
+        st.download_button(
+            label="Download Image",
+            data=buf,
+            file_name=f"{filename}.{file_format.lower()}",
+            mime=f"image/{file_format.lower()}"
+        )
 
    
     #/////////////////////////////////////////////////////////////////////////////////////////////////
