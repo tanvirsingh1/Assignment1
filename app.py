@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 from mini_photo_editor import *
+from io import BytesIO
 
 
 st.title("🖼️Photo Editor")
@@ -35,15 +36,28 @@ with st.sidebar:
     if st.button("History"):
         st.code("\n".join(st.session_state.log) if st.session_state.log else "No history yet.")
 
-    if st.button("Save Image"):
-        if st.session_state.stack:
-            latest_image = st.session_state.stack[-1]
-            pil_image = Image.fromarray(latest_image)  # Converting Image array into object
-            pil_image.save("final_output.png")
-            st.success("Saved as final_output.png")
-        else:
-            st.warning("No image to save.")
+    st.write("---")
+    st.subheader("💾 Save your Edited Image")
+
+    filename = st.text_input("Enter filename (without extension)", value="my_image")
+    file_format = st.selectbox("Choose format", ["PNG", "JPEG"])
+
+    latest_image = st.session_state.stack[-1]
+    pil_image = Image.fromarray(to_rgb(latest_image))
+    buf = BytesIO()
+    pil_image.save(buf, format=file_format)
+    buf.seek(0)
+
+    st.download_button(
+        label="Download Image",
+        data=buf,
+        file_name=f"{filename}.{file_format.lower()}",
+        mime=f"image/{file_format.lower()}"
+    )
+
+   
     #/////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 # Main Window

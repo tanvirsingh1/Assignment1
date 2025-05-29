@@ -10,6 +10,8 @@ def to_bgr(pil_img):
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     return img
 
+
+
 def to_rgb(cv_img):
     return cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
 
